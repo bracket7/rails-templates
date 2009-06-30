@@ -1,0 +1,25 @@
+!!! Strict
+%html{:xmlns=>"http://www.w3.org/1999/xhtml"}
+  %head
+    %title= "AppName: \#{(yield :head_title) || (yield :page_title)}"
+    
+  %body
+    #container  
+      #page
+        #masthead
+          %h1= link_to('AppName', root_path)
+          %ul#user_nav
+            - if logged_in?
+              %li= link_to 'Logout', logout_path, :method => :delete
+              %li= "You are logged in as #{current_user}"
+            - else
+              %li= link_to 'Login', login_path
+        #page-title
+          %h3= "\#{yield :page_title}"
+
+          - if flash_messages?
+            #messages
+              = flash_messages
+        
+        = yield
+        .clear
