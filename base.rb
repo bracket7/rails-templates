@@ -26,11 +26,9 @@ rake "rails:freeze:gems"
 generate :cucumber
 
 # Some standard configuration
-initializer 'will_paginate.rb', <<-CODE
-ActiveRecord::Base.class_eval { def self.per_page; 10; end }
-CODE
+initializer 'will_paginate.rb', "ActiveRecord::Base.class_eval { def self.per_page; 10; end }"
 
-# TODO: Use wget to pull files from github?
+# TODO: Use wget to pull files from github or, more likely, use a generator/module approach
 
 # Standard rake db tasks
 rakefile("db.rake") do
@@ -75,8 +73,7 @@ END
 # Create a single migration that all mods go into until the first production release
 generate :migration, "release001"
 
-run "rm -rf test"
-run "rm public/index.html"
+run "rm -rf test doc public/index.html"
 run "cp config/database.yml config/example_database.yml"
 run "git add *"
 file ".gitignore", <<-END
